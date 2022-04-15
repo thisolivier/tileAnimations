@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Tile Experiments 0.1
+        </title>
+        <script src="https://cdn.jsdelivr.net/npm/@svgdotjs/svg.js@3.0/dist/svg.min.js"></script>
+        <script src="script.js"></script>
+        <style>
+            #drawing {
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                z-index: 0,
+            }
+
+            .overlay {
+                z-index: 1000;
+                position: relative;
+            }
+        </style>
+    </head>
+    <body>
+        <p class="overlay">Tile Experiments 0.1</p>
+        <div id="drawing"></div>
+    </body>
+</html>
