@@ -1,0 +1,3 @@
+# Tiled Composite SVG Elements, Animated
+
+The idea being that a single tile can be specifed, with animations attached to each element, and modifiers for how the animation or tile properties should vary as a function of that tile's index or relative position on-screen.
