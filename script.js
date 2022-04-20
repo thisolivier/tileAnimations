@@ -1,6 +1,16 @@
 var ns = 'http://www.w3.org/2000/svg'
+let sessionId = Math.random()
+
+document.addEventListener("visibilitychange", () => {
+    sessionId = Math.random()
+    main()
+})
 
 document.addEventListener('DOMContentLoaded', (event) => {
+    main()
+})
+
+function main() {
     var div = document.getElementById('drawing')
     var svg = SVG().addTo(div).size(div.offsetWidth, div.offsetHeight)
     let documentWidthAndHeight = [div.offsetWidth, div.offsetHeight]
@@ -25,7 +35,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     }
     console.log(documentWidthAndHeight)
-})
+}
 
 function addSquareAnimation(element, topCorner, indicies, initial) {
     let delay = initial ? (indicies[0] * 20) + (indicies[1] * 20) : 0
@@ -49,10 +59,10 @@ function addSquareAnimation(element, topCorner, indicies, initial) {
 }
 
 function addRotateAnimation(element, topCorner, indicies, initial) {
-    let delay = initial ? (indicies[0] * 100) + (indicies[1] * 200) : 0
+    let delay = initial ? (indicies[0] * 100) + (indicies[1] * 50) : 0
     console.log({element, topCorner, indicies})
     let runner = element.animate({
-        duration: 1000,
+        duration: 2000,
         delay: delay
     })
     runner.ease('-')
