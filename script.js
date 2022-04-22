@@ -1,10 +1,4 @@
 var ns = 'http://www.w3.org/2000/svg'
-let sessionId = Math.random()
-
-document.addEventListener("visibilitychange", () => {
-    sessionId = Math.random()
-    main()
-})
 
 document.addEventListener('DOMContentLoaded', (event) => {
     main()
@@ -13,14 +7,16 @@ document.addEventListener('DOMContentLoaded', (event) => {
 function main() {
     var div = document.getElementById('drawing')
     var svg = SVG().addTo(div).size(div.offsetWidth, div.offsetHeight)
+
     let documentWidthAndHeight = [div.offsetWidth, div.offsetHeight]
-    let numberAcross = 20
+    let numberAcross = 30
     let widthOfOne = documentWidthAndHeight[0] / numberAcross
     let howManyInHeight = Math.ceil(documentWidthAndHeight[1] / widthOfOne)
+
     for (let outerIndex = 0; outerIndex < howManyInHeight; outerIndex++) {
         for (let innerIndex = 0; innerIndex < numberAcross; innerIndex++) {
             let topCorner = [widthOfOne*innerIndex, widthOfOne*outerIndex]
-            let indicies = [outerIndex, innerIndex]
+            let relativePosition = [(outerIndex+0.5)/howManyInHeight, (innerIndex+0.5)/numberAcross]
             let element = addElementAt(
                 svg,
                 topCorner, 
@@ -31,7 +27,7 @@ function main() {
             element.attr({
                 'transform-origin': centerX + ' ' + centerY
             })
-            addRotateAnimation(element, topCorner, indicies, true)
+            addRotateAnimation(element, topCorner, relativePosition, true)
         }
     }
     console.log(documentWidthAndHeight)
@@ -59,10 +55,10 @@ function addSquareAnimation(element, topCorner, indicies, initial) {
 }
 
 function addRotateAnimation(element, topCorner, indicies, initial) {
-    let delay = initial ? (indicies[0] * 100) + (indicies[1] * 50) : 0
-    console.log({element, topCorner, indicies})
+    let deviationFromCenter = [(indicies[0] - 0.5)*2, (indicies[1] - 0.5)*2]
+    let delay = initial ? (Math.abs(deviationFromCenter[0]) * 1500) + (Math.abs(deviationFromCenter[1]) * 1000) : 0
     let runner = element.animate({
-        duration: 2000,
+        duration: 1700,
         delay: delay
     })
     runner.ease('-')
@@ -71,7 +67,7 @@ function addRotateAnimation(element, topCorner, indicies, initial) {
 }
 
 function addElementAt(parent, topCorner, size) {
-    let edge = size*0.35
+    let edge = size*0.5
     let rect = parent
         .rect(edge, edge) // set dimensions
         .attr({ 
